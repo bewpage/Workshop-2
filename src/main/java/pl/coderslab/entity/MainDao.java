@@ -4,15 +4,17 @@ public class MainDao {
   public static void main(String[] args) {
     UserDao userDao = new UserDao();
     // Check if create user works
-    //    checkCreateUser(userDao);
+    // checkCreateUser(userDao);
 
     // check if read/find user works
     // checkFindUserById(userDao);
 
     // check update
-    //    checkUpdateById(userDao);
+    // checkUpdateById(userDao);
 
-    checkDeleteById(userDao, 1);
+    // checkDeleteById(userDao, 1);
+
+    checkFindAll(userDao);
   }
 
   private static void checkCreateUser(UserDao userDao) {
@@ -45,5 +47,13 @@ public class MainDao {
     userDao.delete(userId);
 
     checkFindUserById(userDao, userId);
+  }
+
+  private static void checkFindAll(UserDao userDao) {
+    User[] test = userDao.findAll();
+
+    for (User user : test) {
+      System.out.println("check: " + user.toString());
+    }
   }
 }

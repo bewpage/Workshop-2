@@ -4,6 +4,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import pl.coderslab.DbUtil;
 
 import java.sql.*;
+import java.util.Arrays;
 
 public class UserDao {
 
@@ -100,5 +101,30 @@ public class UserDao {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  // ---- FIND ALL USERS ----
+  private static final String FIND_ALL_QUERY = "SELECT * FROM users";
+
+  public User[] findAll() {
+    User[] users = {};
+    try (Connection conn = DbUtil.connectWorkshop();
+        Statement stmt = conn.createStatement();
+        ResultSet resultSet = stmt.executeQuery(FIND_ALL_QUERY)) {
+      while (resultSet.next()) {
+        User newUser = createUser(resultSet);
+        users = addToArray(newUser, users);
+      }
+      return users;
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private User[] addToArray(User u, User[] users) {
+    User[] tmpUsers =
+        Arrays.copyOf(users, users.length + 1); // Tworzymy kopię tablicy powiększoną o 1.
+    tmpUsers[users.length] = u; // Dodajemy obiekt na ostatniej pozycji.
+    return tmpUsers; // Zwracamy nową tablicę.
   }
 }
