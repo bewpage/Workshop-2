@@ -1,8 +1,10 @@
 package pl.coderslab.entity;
 
 public class MainDao {
+  static UserDao userDao = new UserDao();
+
   public static void main(String[] args) {
-    UserDao userDao = new UserDao();
+
     // Check if create user works
     // checkCreateUser(userDao);
 
@@ -14,7 +16,7 @@ public class MainDao {
 
     // checkDeleteById(userDao, 1);
 
-    checkFindAll(userDao);
+    checkFindAll();
   }
 
   private static void checkCreateUser(UserDao userDao) {
@@ -31,7 +33,7 @@ public class MainDao {
     System.out.println(user.toString());
   }
 
-  private static void checkUpdateById(UserDao userDao) {
+  private static void checkUpdateById() {
     User user1 = userDao.read(1);
 
     user1.setEmail("test_new@gmail.com");
@@ -49,7 +51,7 @@ public class MainDao {
     checkFindUserById(userDao, userId);
   }
 
-  private static void checkFindAll(UserDao userDao) {
+  private static void checkFindAll() {
     User[] test = userDao.findAll();
 
     for (User user : test) {
